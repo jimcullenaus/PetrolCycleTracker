@@ -5,6 +5,29 @@
 
 	<group android:checkableBehavior="single">
 		<item
+			android:id="@+id/nav_sydney"
+			android:title="@string/sydney"
+			/>
+		<item
+			android:id="@+id/nav_melbourne"
+			android:title="@string/melbourne"
+			/>
+		<item
+			android:id="@+id/nav_brisbane"
+			android:title="@string/brisbane"
+			/>
+		<item
+			android:id="@+id/nav_adelaide"
+			android:title="@string/adelaide"
+			/>
+		<item
+			android:id="@+id/nav_perth"
+			android:title="@string/perth"
+			/>
+	</group>
+	<!--
+	<group android:checkableBehavior="single">
+		<item
 			android:id="@+id/nav_camera"
 			android:icon="@drawable/ic_menu_camera"
 			android:title="Import" />
@@ -34,5 +57,6 @@
 				android:title="Send" />
 		</menu>
 	</item>
+	-->
 
 </menu>

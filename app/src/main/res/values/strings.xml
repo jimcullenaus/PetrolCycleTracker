@@ -66,12 +66,18 @@
 		<item>3</item>
 	</string-array>
 
+	<string name="sydney">Sydney</string>
+	<string name="melbourne">Melbourne</string>
+	<string name="brisbane">Brisbane</string>
+	<string name="adelaide">Adelaide</string>
+	<string name="perth">Perth</string>
+
 	<string-array name="cities">
-		<item>Sydney</item>
-		<item>Melbourne</item>
-		<item>Brisbane</item>
-		<item>Adelaide</item>
-		<item>Perth</item>
+		<item>@string/sydney</item>
+		<item>@string/melbourne</item>
+		<item>@string/brisbane</item>
+		<item>@string/adelaide</item>
+		<item>@string/perth</item>
 	</string-array>
 
 	<string-array name="multi_select_list_preference_default_value" />
