@@ -36,14 +36,6 @@ public class MainActivity extends AppCompatActivity
 
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-
-//		mSettingsButton = findViewById(R.id.action_settings);
-//		mSettingsButton.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				Toast.makeText(view.getContext(), "Going to settings", Toast.LENGTH_SHORT).show();
-//			}
-//		});
 	}
 
 	@Override
@@ -72,6 +64,7 @@ public class MainActivity extends AppCompatActivity
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
+			Toast.makeText(this, "Going to settings", Toast.LENGTH_SHORT).show();
 			return true;
 		}
 
@@ -86,24 +79,26 @@ public class MainActivity extends AppCompatActivity
 
 		if (id == R.id.nav_camera) {
 			// Handle the camera action
+			Toast.makeText(this, "Going to camera", Toast.LENGTH_SHORT).show();
 		} else if (id == R.id.nav_gallery) {
+			Toast.makeText(this, "Going to gallery", Toast.LENGTH_SHORT).show();
 
 		} else if (id == R.id.nav_slideshow) {
+			Toast.makeText(this, "Going to slideshow", Toast.LENGTH_SHORT).show();
 
 		} else if (id == R.id.nav_manage) {
+			Toast.makeText(this, "Going to manage", Toast.LENGTH_SHORT).show();
 
 		} else if (id == R.id.nav_share) {
+			Toast.makeText(this, "Going to share", Toast.LENGTH_SHORT).show();
 
 		} else if (id == R.id.nav_send) {
+			Toast.makeText(this, "Going to send", Toast.LENGTH_SHORT).show();
 
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
-	}
-
-	public void goToSettings(View view) {
-		Toast.makeText(view.getContext(), "Going to settings", Toast.LENGTH_SHORT).show();
 	}
 }

@@ -9,6 +9,5 @@
 		android:orderInCategory="100"
 		android:title="@string/action_settings"
 		android:visible="true"
-		android:onClick="goToSettings"
 		app:showAsAction="ifRoom" />
 </menu>
