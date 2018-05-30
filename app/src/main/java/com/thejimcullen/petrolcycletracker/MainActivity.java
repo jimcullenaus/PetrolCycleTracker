@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
 	ImageView mSettingsButton;
+	TextView mMainText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity
 
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
+
+		mMainText = findViewById(R.id.main_text);
 
 		for (String city : getResources().getStringArray(R.array.cities)) {
 
@@ -83,35 +87,16 @@ public class MainActivity extends AppCompatActivity
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
-		/*if (id == R.id.nav_camera) {
-			// Handle the camera action
-			Toast.makeText(this, "Going to camera", Toast.LENGTH_SHORT).show();
-		} else if (id == R.id.nav_gallery) {
-			Toast.makeText(this, "Going to gallery", Toast.LENGTH_SHORT).show();
-
-		} else if (id == R.id.nav_slideshow) {
-			Toast.makeText(this, "Going to slideshow", Toast.LENGTH_SHORT).show();
-
-		} else if (id == R.id.nav_manage) {
-			Toast.makeText(this, "Going to manage", Toast.LENGTH_SHORT).show();
-
-		} else if (id == R.id.nav_share) {
-			Toast.makeText(this, "Going to share", Toast.LENGTH_SHORT).show();
-
-		} else if (id == R.id.nav_send) {
-			Toast.makeText(this, "Going to send", Toast.LENGTH_SHORT).show();
-
-		}*/
 		if (id == R.id.nav_sydney) {
-			Toast.makeText(this, "Sydney", Toast.LENGTH_SHORT).show();
+			mMainText.setText("Sydney");
 		} else if (id == R.id.nav_melbourne) {
-			Toast.makeText(this, "Melbourne", Toast.LENGTH_SHORT).show();
+			mMainText.setText("Melbourne");
 		} else if (id == R.id.nav_brisbane) {
-			Toast.makeText(this, "Brisbane", Toast.LENGTH_SHORT).show();
+			mMainText.setText("Brisbane");
 		} else if (id == R.id.nav_adelaide) {
-			Toast.makeText(this, "Adelaide", Toast.LENGTH_SHORT).show();
+			mMainText.setText("Adelaide");
 		} else if (id == R.id.nav_perth) {
-			Toast.makeText(this, "Perth", Toast.LENGTH_SHORT).show();
+			mMainText.setText("Perth");
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
