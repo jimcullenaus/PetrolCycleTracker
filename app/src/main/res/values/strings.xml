@@ -95,4 +95,5 @@
 	<string name="pref_title_vibrate">Vibrate</string>
 
 	<string name="url">https://www.accc.gov.au/consumers/petrol-diesel-lpg/petrol-price-cycles</string>
+	<string name="accc_copyright">Data used courtesy of ACCC under a CC BY 3.0 AU licence.</string>
 </resources>
