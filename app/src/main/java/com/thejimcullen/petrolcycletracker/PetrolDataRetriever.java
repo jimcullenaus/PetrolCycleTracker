@@ -2,6 +2,8 @@ package com.thejimcullen.petrolcycletracker;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.text.Html;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -67,11 +69,15 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 
 	@Override
 	public void onPostExecute(CityPetrolState state) {
-		String result = state.getLeadInText() + System.getProperty("line.separator") +
-				state.getRecommendation() + System.getProperty("line.separator") +
-				state.getInfo() + System.getProperty("line.separator") +
-				state.getImageUrl();
-		activity.setmMainText(result);
+		String result = state.getLeadInText() + //System.getProperty("line.separator") +
+				state.getRecommendation() + //System.getProperty("line.separator") +
+				state.getInfo(); //+ System.getProperty("line.separator") +
+				//state.getImageUrl();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			activity.setmMainText(Html.fromHtml(result, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST));
+		} else {
+			activity.setmMainText(Html.fromHtml(result));
+		}
 	}
 
 

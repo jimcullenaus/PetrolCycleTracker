@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -115,6 +116,10 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void setmMainText(String text) {
+		mMainText.setText(text);
+	}
+
+	public void setmMainText(Spanned text) {
 		mMainText.setText(text);
 	}
 }
