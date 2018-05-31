@@ -1,5 +1,6 @@
 package com.thejimcullen.petrolcycletracker;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +17,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -24,6 +29,11 @@ public class MainActivity extends AppCompatActivity
 
 	ImageView mSettingsButton;
 	TextView mMainText;
+	PetrolDataRetriever sydney = null;
+	PetrolDataRetriever melbourne = null;
+	PetrolDataRetriever brisbane = null;
+	PetrolDataRetriever adelaide = null;
+	PetrolDataRetriever perth = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +98,24 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		if (id == R.id.nav_sydney) {
-			mMainText.setText("Sydney");
+			//mMainText.setText(getString(R.string.sydney));
+			new PetrolDataRetriever(this).execute(getString(R.string.sydney));
 		} else if (id == R.id.nav_melbourne) {
-			mMainText.setText("Melbourne");
+			mMainText.setText(getString(R.string.melbourne));
 		} else if (id == R.id.nav_brisbane) {
-			mMainText.setText("Brisbane");
+			mMainText.setText(getString(R.string.brisbane));
 		} else if (id == R.id.nav_adelaide) {
-			mMainText.setText("Adelaide");
+			mMainText.setText(getString(R.string.adelaide));
 		} else if (id == R.id.nav_perth) {
-			mMainText.setText("Perth");
+			mMainText.setText(getString(R.string.perth));
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
+	}
+
+	public void setmMainText(String text) {
+		mMainText.setText(text);
 	}
 }
