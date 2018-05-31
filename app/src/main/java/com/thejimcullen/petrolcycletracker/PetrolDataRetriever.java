@@ -36,12 +36,15 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 
 		String imgUrl;
 		Element recommendation;
+		Element leadInText;
+		Element info;
 		try {
 			String elementId = String.format("petrol-prices-in-%s", cityName.toLowerCase());
-			Element x = document.getElementById(elementId);
-			Element title = x.parent();
-			recommendation = title.nextElementSibling().nextElementSibling();
-			Element image = recommendation.nextElementSibling().nextElementSibling().child(0);
+			Element title = document.getElementById(elementId).parent();
+			leadInText = title.nextElementSibling();
+			recommendation = leadInText.nextElementSibling();
+			info = recommendation.nextElementSibling();
+			Element image = info.nextElementSibling().child(0);
 			if (image.tagName().equals("img")) {
 				imgUrl = recommendation.nextElementSibling().nextElementSibling().child(0).absUrl("src");
 			} else {
@@ -54,7 +57,7 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 			return null;
 		}
 
-		return new CityPetrolState(imgUrl, recommendation.html());
+		return new CityPetrolState(imgUrl, leadInText.html(), recommendation.html(), info.html());
 	}
 
 	@Override
@@ -64,7 +67,11 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 
 	@Override
 	public void onPostExecute(CityPetrolState state) {
-		activity.setmMainText(state.getRecommendation() + System.getProperty("line.separator") + state.getImageUrl());
+		String result = state.getLeadInText() + System.getProperty("line.separator") +
+				state.getRecommendation() + System.getProperty("line.separator") +
+				state.getInfo() + System.getProperty("line.separator") +
+				state.getImageUrl();
+		activity.setmMainText(result);
 	}
 
 
