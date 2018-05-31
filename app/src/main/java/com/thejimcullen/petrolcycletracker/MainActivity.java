@@ -98,16 +98,15 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		if (id == R.id.nav_sydney) {
-			//mMainText.setText(getString(R.string.sydney));
 			new PetrolDataRetriever(this).execute(getString(R.string.sydney));
 		} else if (id == R.id.nav_melbourne) {
-			mMainText.setText(getString(R.string.melbourne));
+			new PetrolDataRetriever(this).execute(getString(R.string.melbourne));
 		} else if (id == R.id.nav_brisbane) {
-			mMainText.setText(getString(R.string.brisbane));
+			new PetrolDataRetriever(this).execute(getString(R.string.brisbane));
 		} else if (id == R.id.nav_adelaide) {
-			mMainText.setText(getString(R.string.adelaide));
+			new PetrolDataRetriever(this).execute(getString(R.string.adelaide));
 		} else if (id == R.id.nav_perth) {
-			mMainText.setText(getString(R.string.perth));
+			new PetrolDataRetriever(this).execute(getString(R.string.perth));
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
