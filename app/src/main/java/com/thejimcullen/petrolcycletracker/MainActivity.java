@@ -2,7 +2,6 @@ package com.thejimcullen.petrolcycletracker;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Spanned;
 import android.util.Log;
@@ -18,9 +17,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +26,7 @@ public class MainActivity extends AppCompatActivity
 
 	ImageView mSettingsButton;
 	TextView mMainText;
+	ImageView mPriceGraph;
 	PetrolDataRetriever sydney = null;
 	PetrolDataRetriever melbourne = null;
 	PetrolDataRetriever brisbane = null;
@@ -53,6 +50,7 @@ public class MainActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 
 		mMainText = findViewById(R.id.main_text);
+		mPriceGraph = findViewById(R.id.price_chart);
 
 		for (String city : getResources().getStringArray(R.array.cities)) {
 
