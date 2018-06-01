@@ -3,6 +3,7 @@ package com.thejimcullen.petrolcycletracker;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +27,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
+	SwipeRefreshLayout swipeRefreshLayout;
+	ListView listView;
 	ImageView mSettingsButton;
 	TextView mMainText;
 	ImageView mPriceGraph;
+	TextView mCopyright;
 	PetrolDataRetriever sydney = null;
 	PetrolDataRetriever melbourne = null;
 	PetrolDataRetriever brisbane = null;
