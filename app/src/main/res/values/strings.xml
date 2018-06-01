@@ -96,4 +96,5 @@
 
 	<string name="url">https://www.accc.gov.au/consumers/petrol-diesel-lpg/petrol-price-cycles</string>
 	<string name="accc_copyright">Data used courtesy of ACCC under a CC BY 3.0 AU licence.</string>
+	<string name="sample_text">&lt;p&gt;&lt;strong&gt;Buying tip&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Perth currently has regular weekly petrol price cycles, with prices generally peaking on Tuesday and then decreasing to a low on Monday.&lt;/p&gt;&lt;p&gt;The chart below shows average daily regular unleaded petrol prices in Perth over the past 45 days.&lt;/p&gt;&lt;p&gt;Information on the past five price cycles in Perth is shown below:&lt;/p&gt;</string>
 </resources>
