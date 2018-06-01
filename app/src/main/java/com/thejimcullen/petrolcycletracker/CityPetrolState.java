@@ -1,16 +1,18 @@
 package com.thejimcullen.petrolcycletracker;
 
 public class CityPetrolState {
+	private String imgAlt;
 	private String imageUrl;
 	private String leadInText;
 	private String recommendation;
 	private String info;
 
-	public CityPetrolState(String imageUrl, String leadInText, String recommendation, String info) {
+	CityPetrolState(String imageUrl, String imgAlt, String leadInText, String recommendation, String info) {
 		this.imageUrl = imageUrl;
 		this.leadInText = leadInText;
 		this.recommendation = recommendation;
 		this.info = info;
+		this.imgAlt = imgAlt;
 	}
 
 	public String getImageUrl() {
@@ -27,5 +29,9 @@ public class CityPetrolState {
 
 	public String getInfo() {
 		return info;
+	}
+
+	public String getImgAlt() {
+		return imgAlt;
 	}
 }

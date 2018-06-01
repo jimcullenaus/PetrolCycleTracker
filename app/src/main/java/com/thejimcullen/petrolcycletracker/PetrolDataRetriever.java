@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolState> {
 
-	MainActivity activity;
+	private MainActivity activity;
 
-	public PetrolDataRetriever(MainActivity activity) {
+	PetrolDataRetriever(MainActivity activity) {
 		this.activity = activity;
 	}
 
@@ -37,6 +37,7 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 		}
 
 		String imgUrl;
+		String imgAlt;
 		Element recommendation;
 		Element leadInText;
 		Element info;
@@ -49,6 +50,7 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 			Element image = info.nextElementSibling().child(0);
 			if (image.tagName().equals("img")) {
 				imgUrl = recommendation.nextElementSibling().nextElementSibling().child(0).absUrl("src");
+				imgAlt = recommendation.nextElementSibling().nextElementSibling().child(0).absUrl("alt");
 			} else {
 				cancel(true);
 				return null;
@@ -59,7 +61,7 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 			return null;
 		}
 
-		return new CityPetrolState(imgUrl, leadInText.html(), recommendation.html(), info.html());
+		return new CityPetrolState(imgUrl, imgAlt, leadInText.html(), recommendation.html(), info.html());
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 		} else {
 			activity.setmMainText(Html.fromHtml(result));
 		}
-		new ImageDownloader(activity.mPriceGraph).execute(state.getImageUrl());
+		new ImageDownloader(activity.mPriceGraph, state).execute(state.getImageUrl());
 	}
 
 

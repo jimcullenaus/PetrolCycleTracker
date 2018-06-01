@@ -32,6 +32,7 @@
 			android:adjustViewBounds="true"
 			android:layout_marginBottom="@dimen/img_margin"
 			android:layout_marginTop="@dimen/img_margin"
+			tools:ignore="ContentDescription"
 			/>
 
 		<TextView
@@ -42,8 +43,7 @@
 			android:text="@string/accc_copyright"
 			android:layout_marginTop="@dimen/fab_margin"
 			/>
+
 	</RelativeLayout>
-
-
 
 </ScrollView>
