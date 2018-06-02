@@ -45,7 +45,8 @@
 
 			<TextView
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="20dp"
+				android:autoSizeTextType="uniform"
 				android:layout_alignParentBottom="true"
 				android:gravity="center_horizontal"
 				android:text="@string/accc_copyright" />
