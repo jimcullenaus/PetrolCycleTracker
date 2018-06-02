@@ -1,5 +1,6 @@
 package com.thejimcullen.petrolcycletracker;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 	PetrolDataRetriever brisbane = null;
 	PetrolDataRetriever adelaide = null;
 	PetrolDataRetriever perth = null;
+	SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,17 @@ public class MainActivity extends AppCompatActivity
 		mMainText = findViewById(R.id.main_text);
 		mPriceGraph = findViewById(R.id.price_chart);
 
-		for (String city : getResources().getStringArray(R.array.cities)) {
+		swipeRefreshLayout = findViewById(R.id.main_swipe_layout);
+		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+			}
+		});
 
+		preferences = getSharedPreferences("CITY_PREF", MODE_PRIVATE);
+		int cityPref = preferences.getInt("currentCity", -1);
+		if (cityPref >= 0) {
+			new PetrolDataRetriever(this).execute(City.getCity(cityPref));
 		}
 	}
 

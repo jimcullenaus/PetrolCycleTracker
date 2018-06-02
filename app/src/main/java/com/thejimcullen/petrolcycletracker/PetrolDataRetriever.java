@@ -11,7 +11,7 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
-public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolState> {
+public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState> {
 
 	private MainActivity activity;
 
@@ -20,10 +20,10 @@ public class PetrolDataRetriever  extends AsyncTask<String, Void, CityPetrolStat
 	}
 
 	@Override
-	public CityPetrolState doInBackground(String... params) {
+	public CityPetrolState doInBackground(City... params) {
 		String cityName;
 		try {
-			cityName = params[0];
+			cityName = params[0].cityName();
 		} catch (ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
 			cancel(true);
