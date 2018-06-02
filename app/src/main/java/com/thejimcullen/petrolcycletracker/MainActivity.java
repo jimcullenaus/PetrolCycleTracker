@@ -112,17 +112,30 @@ public class MainActivity extends AppCompatActivity
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
+		City city;
+
 		if (id == R.id.nav_sydney) {
-			new PetrolDataRetriever(this).execute(getString(R.string.sydney));
+			city = City.SYDNEY;
 		} else if (id == R.id.nav_melbourne) {
-			new PetrolDataRetriever(this).execute(getString(R.string.melbourne));
+			city = City.MELBOURNE;
 		} else if (id == R.id.nav_brisbane) {
-			new PetrolDataRetriever(this).execute(getString(R.string.brisbane));
+			city = City.BRISBANE;
 		} else if (id == R.id.nav_adelaide) {
-			new PetrolDataRetriever(this).execute(getString(R.string.adelaide));
-		} else if (id == R.id.nav_perth) {
-			new PetrolDataRetriever(this).execute(getString(R.string.perth));
+			city = City.ADELAIDE;
+		} //else if (id == R.id.nav_perth) {
+		// city = City.PERTH;
+//		}
+		else if (id == R.id.nav_default) {
+			mMainText.setText(getString(R.string.sample_text));
+			return true;
 		}
+		else {
+			return false;
+		}
+		new PetrolDataRetriever(this).execute(city);
+		SharedPreferences.Editor preferenceEditor = preferences.edit();
+		preferenceEditor.putInt("currentCity", city.ordinal());
+		preferenceEditor.apply();
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);

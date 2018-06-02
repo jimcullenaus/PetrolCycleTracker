@@ -5,6 +5,10 @@
 
 	<group android:checkableBehavior="single">
 		<item
+			android:id="@+id/nav_default"
+			android:title="Default"
+			/>
+		<item
 			android:id="@+id/nav_sydney"
 			android:title="@string/sydney"
 			/>
@@ -19,10 +23,6 @@
 		<item
 			android:id="@+id/nav_adelaide"
 			android:title="@string/adelaide"
-			/>
-		<item
-			android:id="@+id/nav_perth"
-			android:title="@string/perth"
 			/>
 	</group>
 	<!--
