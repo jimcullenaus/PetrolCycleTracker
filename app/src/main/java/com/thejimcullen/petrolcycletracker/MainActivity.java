@@ -64,11 +64,15 @@ public class MainActivity extends AppCompatActivity
 
 		mMainText = findViewById(R.id.main_text);
 		mPriceGraph = findViewById(R.id.price_chart);
+		mCopyright = findViewById(R.id.copyright);
 
 		swipeRefreshLayout = findViewById(R.id.main_swipe_layout);
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
+				swipeRefreshLayout.setRefreshing(true);
+				refreshLayout();
+
 			}
 		});
 
@@ -175,5 +179,10 @@ public class MainActivity extends AppCompatActivity
 
 	public void setmMainText(Spanned text) {
 		mMainText.setText(text);
+	}
+
+	public void refreshLayout() {
+		mCopyright.setText("refreshed");
+		swipeRefreshLayout.setRefreshing(false);
 	}
 }
