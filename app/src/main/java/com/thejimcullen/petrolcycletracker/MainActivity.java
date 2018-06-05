@@ -1,8 +1,12 @@
 package com.thejimcullen.petrolcycletracker;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spanned;
@@ -22,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 		preferences = getSharedPreferences("CITY_PREF", MODE_PRIVATE);
 		int cityPref = preferences.getInt("currentCity", -1);
 		if (cityPref >= 0) {
-			new PetrolDataRetriever(this).execute(City.getCity(cityPref));
+			//new PetrolDataRetriever(this).execute(City.getCity(cityPref));
 		}
 	}
 
@@ -140,6 +145,28 @@ public class MainActivity extends AppCompatActivity
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// main text
+		outState.putCharSequence("MainText", mMainText.getText());
+		// image
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.PNG, 50, bs);
+		outState.putInt("GraphSize", bs.size());
+		outState.putByteArray("Graph", bs.toByteArray());
+
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		Bitmap bitmap = BitmapFactory.decodeByteArray(savedInstanceState.getByteArray("Graph"), 0, savedInstanceState.getInt("GraphSize"));
+		mPriceGraph.setImageBitmap(bitmap);
+		mMainText.setText(savedInstanceState.getCharSequence("MainText"));
+
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	public void setmMainText(String text) {
