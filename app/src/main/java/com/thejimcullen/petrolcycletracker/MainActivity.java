@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 	TextView mMainText;
 	ImageView mPriceGraph;
 	TextView mCopyright;
+	ProgressBar mProgressBar;
 	PetrolDataRetriever sydney = null;
 	PetrolDataRetriever melbourne = null;
 	PetrolDataRetriever brisbane = null;
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity
 		mMainText = findViewById(R.id.main_text);
 		mPriceGraph = findViewById(R.id.price_chart);
 		mCopyright = findViewById(R.id.copyright);
+
+		mProgressBar = findViewById(R.id.pBar);
+		mProgressBar.setVisibility(View.GONE);
 
 		swipeRefreshLayout = findViewById(R.id.main_swipe_layout);
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -179,6 +185,23 @@ public class MainActivity extends AppCompatActivity
 
 	public void setmMainText(Spanned text) {
 		mMainText.setText(text);
+	}
+
+	public void startProgress() {
+		mProgressBar.setVisibility(View.VISIBLE);
+		mMainText.setVisibility(View.GONE);
+		mPriceGraph.setVisibility(View.GONE);
+	}
+
+	public void endProgress() {
+		mMainText.setVisibility(View.VISIBLE);
+		mPriceGraph.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(View.GONE);
+	}
+
+	public void failedProgress() {
+		mMainText.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(View.GONE);
 	}
 
 	public void refreshLayout() {

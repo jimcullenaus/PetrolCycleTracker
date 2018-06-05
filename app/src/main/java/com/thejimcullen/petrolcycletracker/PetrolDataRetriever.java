@@ -1,6 +1,5 @@
 package com.thejimcullen.petrolcycletracker;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.text.Html;
@@ -17,6 +16,12 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 
 	PetrolDataRetriever(MainActivity activity) {
 		this.activity = activity;
+	}
+
+	@Override
+	protected void onPreExecute() {
+		activity.startProgress();
+		super.onPreExecute();
 	}
 
 	@Override
@@ -67,10 +72,13 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 	@Override
 	public void onCancelled() {
 		activity.setmMainText("Unable to obtain data");
+		activity.failedProgress();
 	}
 
 	@Override
 	public void onPostExecute(CityPetrolState state) {
+		activity.endProgress();
+
 		String result = state.getLeadInText() + //System.getProperty("line.separator") +
 				state.getRecommendation() + //System.getProperty("line.separator") +
 				state.getInfo(); //+ System.getProperty("line.separator") +
