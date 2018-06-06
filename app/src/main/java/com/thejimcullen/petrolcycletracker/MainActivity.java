@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
 	SwipeRefreshLayout swipeRefreshLayout;
-	ListView listView;
 	ImageView mSettingsButton;
 	TextView mMainText;
+	TextView mWelcome;
 	ImageView mPriceGraph;
 	TextView mCopyright;
 	ProgressBar mProgressBar;
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 
 		mMainText = findViewById(R.id.main_text);
+		mWelcome = findViewById(R.id.welcome_text);
 		mPriceGraph = findViewById(R.id.price_chart);
 		mCopyright = findViewById(R.id.copyright);
 
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity
 		else {
 			return false;
 		}
+		displayGraph();
 		new PetrolDataRetriever(this).execute(city);
 		SharedPreferences.Editor preferenceEditor = preferences.edit();
 		preferenceEditor.putInt("currentCity", city.ordinal());
@@ -185,6 +187,20 @@ public class MainActivity extends AppCompatActivity
 
 	public void setmMainText(Spanned text) {
 		mMainText.setText(text);
+	}
+
+	public void displayWelcome() {
+		mMainText.setVisibility(View.GONE);
+		mWelcome.setVisibility(View.VISIBLE);
+		mPriceGraph.setVisibility(View.GONE);
+		mCopyright.setVisibility(View.INVISIBLE);
+	}
+
+	public void displayGraph() {
+		mMainText.setVisibility(View.VISIBLE);
+		mWelcome.setVisibility(View.GONE);
+		mPriceGraph.setVisibility(View.VISIBLE);
+		mCopyright.setVisibility(View.VISIBLE);
 	}
 
 	public void startProgress() {

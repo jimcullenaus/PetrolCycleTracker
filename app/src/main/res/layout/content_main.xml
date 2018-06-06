@@ -32,13 +32,22 @@
 				android:layout_alignTop="@+id/main_text"
 				android:layout_centerHorizontal="true"
 				android:background="@null"
+				android:visibility="gone"
+				/>
+
+			<TextView
+				android:id="@+id/welcome_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/welcome"
 				/>
 
 			<TextView
 				android:id="@+id/main_text"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="@string/sample_text" />
+				android:visibility="gone"
+				/>
 
 			<ImageView
 				android:id="@+id/price_chart"
@@ -51,6 +60,7 @@
 				android:adjustViewBounds="true"
 				android:scaleType="fitXY"
 				android:src="@drawable/sample_image"
+				android:visibility="gone"
 				tools:ignore="ContentDescription" />
 
 			<TextView
@@ -60,6 +70,7 @@
 				android:autoSizeTextType="uniform"
 				android:layout_alignParentBottom="true"
 				android:gravity="center_horizontal"
+				android:visibility="invisible"
 				android:text="@string/accc_copyright" />
 		</RelativeLayout>
 
