@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity
 		// city = City.PERTH;
 //		}
 		else if (id == R.id.nav_default) {
-			mMainText.setText(getString(R.string.sample_text));
+			displayWelcome();
+			finishNavigationSelection();
 			return true;
 		}
 		else {
@@ -154,9 +155,14 @@ public class MainActivity extends AppCompatActivity
 		preferenceEditor.putInt("currentCity", city.ordinal());
 		preferenceEditor.apply();
 
+		finishNavigationSelection();
+
+		return true;
+	}
+
+	private void finishNavigationSelection() {
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
-		return true;
 	}
 
 	@Override
