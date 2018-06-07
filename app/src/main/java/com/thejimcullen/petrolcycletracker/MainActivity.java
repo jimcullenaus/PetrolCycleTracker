@@ -144,22 +144,24 @@ public class MainActivity extends AppCompatActivity
 		} else if (id == R.id.nav_default) {
 			displayWelcome();
 			finishNavigationSelection();
-			SharedPreferences.Editor preferencesEditor = preferences.edit();
-			preferencesEditor.putInt("currentCity", -1);
-			preferencesEditor.apply();
+			setPreferences("currentCity", -1);
 			return true;
 		} else {
 			return false;
 		}
 		displayGraph();
 		new PetrolDataRetriever(this).execute(city);
-		SharedPreferences.Editor preferenceEditor = preferences.edit();
-		preferenceEditor.putInt("currentCity", city.ordinal());
-		preferenceEditor.apply();
+		setPreferences("currentCity", city.ordinal());
 
 		finishNavigationSelection();
 
 		return true;
+	}
+
+	private void setPreferences(String key, int value) {
+		SharedPreferences.Editor preferencesEditor = preferences.edit();
+		preferencesEditor.putInt(key, value);
+		preferencesEditor.apply();
 	}
 
 	private void finishNavigationSelection() {
