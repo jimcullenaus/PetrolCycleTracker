@@ -84,9 +84,12 @@ public class MainActivity extends AppCompatActivity
 		});
 
 		preferences = getSharedPreferences("CITY_PREF", MODE_PRIVATE);
-		int cityPref = preferences.getInt("currentCity", -1);
-		if (cityPref >= 0) {
-			//new PetrolDataRetriever(this).execute(City.getCity(cityPref));
+		// if not restoring from a recent state, use preference
+		if (savedInstanceState == null) {
+			int cityPref = preferences.getInt("currentCity", -1);
+			if (cityPref >= 0) {
+				//new PetrolDataRetriever(this).execute(City.getCity(cityPref));
+			}
 		}
 	}
 
@@ -138,15 +141,14 @@ public class MainActivity extends AppCompatActivity
 			city = City.BRISBANE;
 		} else if (id == R.id.nav_adelaide) {
 			city = City.ADELAIDE;
-		} //else if (id == R.id.nav_perth) {
-		// city = City.PERTH;
-//		}
-		else if (id == R.id.nav_default) {
+		} else if (id == R.id.nav_default) {
 			displayWelcome();
 			finishNavigationSelection();
+			SharedPreferences.Editor preferencesEditor = preferences.edit();
+			preferencesEditor.putInt("currentCity", -1);
+			preferencesEditor.apply();
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 		displayGraph();
@@ -183,6 +185,7 @@ public class MainActivity extends AppCompatActivity
 		Bitmap bitmap = BitmapFactory.decodeByteArray(savedInstanceState.getByteArray("Graph"), 0, savedInstanceState.getInt("GraphSize"));
 		mPriceGraph.setImageBitmap(bitmap);
 		mMainText.setText(savedInstanceState.getCharSequence("MainText"));
+		displayGraph();
 
 		super.onRestoreInstanceState(savedInstanceState);
 	}
