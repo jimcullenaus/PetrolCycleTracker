@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 	<string name="app_name">Petrol Cycle Tracker</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
@@ -101,4 +101,10 @@
 	<string name="welcome">Welcome to Petrol Cycle Tracker, an app for keeping track of the price of petrol in Australian capital cities as they change over time.\nSelect a city from the drawer menu on the left to view the current data for that city, or set up notifications when the cycle is at its lowest using the settings.</string>
 	<string name="nav_welcome">Welcome</string>
 	<string name="settings">Settings</string>
+
+	<string name="CITY_PREFERENCES"><xliff:g id="city_preferences">CITY_PREF</xliff:g></string>
+	<string name="CURRENT_CITY_PREF"><xliff:g id="current_city_pref">CurrentCity</xliff:g></string>
+	<string name="PREFERRED_CITY"><xliff:g id="preferred_city_pref">PreferredCity</xliff:g></string>
+
+	<string name="LOG_CITY_SELECTED"><xliff:g id="log_city_selected">LOG_CITY_SELECTED</xliff:g></string>
 </resources>

@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity
 		mProgressBar = findViewById(R.id.pBar);
 		mProgressBar.setVisibility(View.GONE);
 
+		preferences = getSharedPreferences(getString(R.string.CITY_PREFERENCES), MODE_PRIVATE);
+
 		swipeRefreshLayout = findViewById(R.id.main_swipe_layout);
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
@@ -83,12 +85,19 @@ public class MainActivity extends AppCompatActivity
 			}
 		});
 
-		preferences = getSharedPreferences("CITY_PREF", MODE_PRIVATE);
 		// if not restoring from a recent state, use preference
 		if (savedInstanceState == null) {
-			int cityPref = preferences.getInt("currentCity", -1);
-			if (cityPref >= 0) {
-				//new PetrolDataRetriever(this).execute(City.getCity(cityPref));
+			int preferredCity = preferences.getInt(getString(R.string.PREFERRED_CITY), -1);
+			int currentCityPref = preferences.getInt(getString(R.string.CURRENT_CITY_PREF), -1);
+
+			if (preferredCity >= 0) {
+				displayGraph();
+				new PetrolDataRetriever(this).execute(City.getCity(preferredCity));
+			} else if (currentCityPref >= 0) {
+				displayGraph();
+				new PetrolDataRetriever(this).execute(City.getCity(currentCityPref));
+			} else {
+				displayWelcome();
 			}
 		}
 	}
@@ -144,17 +153,17 @@ public class MainActivity extends AppCompatActivity
 		} else if (id == R.id.nav_default) {
 			displayWelcome();
 			finishNavigationSelection();
-			setPreferences("currentCity", -1);
+			setPreferences(getString(R.string.CURRENT_CITY_PREF), -1);
 			return true;
 		} else {
+			Log.e(getString(R.string.LOG_CITY_SELECTED), "No valid city selected in onNavigationItemSelected");
 			return false;
 		}
 		displayGraph();
 		new PetrolDataRetriever(this).execute(city);
-		setPreferences("currentCity", city.ordinal());
+		setPreferences(getString(R.string.CURRENT_CITY_PREF), city.ordinal());
 
 		finishNavigationSelection();
-
 		return true;
 	}
 
