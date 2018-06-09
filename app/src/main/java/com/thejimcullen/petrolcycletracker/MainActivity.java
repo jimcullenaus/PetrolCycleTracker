@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
 	SwipeRefreshLayout swipeRefreshLayout;
-	ImageView mSettingsButton;
-	TextView mMainText;
+	TextView mIntroText;
+	TextView mBuyingRecommendation;
+	TextView mGraphInfo;
 	TextView mWelcome;
 	ImageView mPriceGraph;
 	TextView mCopyright;
@@ -59,9 +60,11 @@ public class MainActivity extends AppCompatActivity
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		mMainText = findViewById(R.id.main_text);
+		mIntroText = findViewById(R.id.intro_text);
+		mBuyingRecommendation = findViewById(R.id.buying_recommendation);
 		mWelcome = findViewById(R.id.welcome_text);
-		mPriceGraph = findViewById(R.id.price_chart);
+		mPriceGraph = findViewById(R.id.price_graph);
+		mGraphInfo = findViewById(R.id.graph_info);
 		mCopyright = findViewById(R.id.copyright);
 
 		mProgressBar = findViewById(R.id.pBar);
@@ -190,7 +193,9 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// main text
-		outState.putCharSequence("MainText", mMainText.getText());
+		outState.putCharSequence(getString(R.string.RECENT_INTRO_TEXT), mIntroText.getText());
+		outState.putCharSequence(getString(R.string.RECENT_RECOMMENDATION), mBuyingRecommendation.getText());
+		outState.putCharSequence(getString(R.string.RECENT_GRAPH_INFO), mGraphInfo.getText());
 		// image
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.PNG, 50, bs);
@@ -212,7 +217,9 @@ public class MainActivity extends AppCompatActivity
 			currentCity = City.getCity(currentCityPref);
 			Bitmap bitmap = BitmapFactory.decodeByteArray(savedInstanceState.getByteArray("Graph"), 0, savedInstanceState.getInt("GraphSize"));
 			mPriceGraph.setImageBitmap(bitmap);
-			mMainText.setText(savedInstanceState.getCharSequence("MainText"));
+			mIntroText.setText(savedInstanceState.getCharSequence(getString(R.string.RECENT_INTRO_TEXT)));
+			mBuyingRecommendation.setText(savedInstanceState.getCharSequence(getString(R.string.RECENT_RECOMMENDATION)));
+			mGraphInfo.setText(savedInstanceState.getCharSequence(getString(R.string.RECENT_GRAPH_INFO)));
 			displayGraph();
 			Toolbar toolbar = findViewById(R.id.toolbar);
 			toolbar.setTitle(savedInstanceState.getString(getString(R.string.TOOLBAR_TITLE)));
@@ -221,18 +228,22 @@ public class MainActivity extends AppCompatActivity
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	public void setmMainText(String text) {
-		mMainText.setText(text);
+	public void setmBuyingRecommendation(String text) {
+		mBuyingRecommendation.setText(text);
 	}
 
-	public void setmMainText(Spanned text) {
-		mMainText.setText(text);
+	public void setTextResults(Spanned introText, Spanned recommendation, Spanned graphInfo) {
+		mIntroText.setText(introText);
+		mBuyingRecommendation.setText(recommendation);
+		mGraphInfo.setText(graphInfo);
 	}
 
 	public void displayWelcome() {
-		mMainText.setVisibility(View.GONE);
+		mBuyingRecommendation.setVisibility(View.GONE);
 		mWelcome.setVisibility(View.VISIBLE);
+		mIntroText.setVisibility(View.GONE);
 		mPriceGraph.setVisibility(View.GONE);
+		mGraphInfo.setVisibility(View.GONE);
 		mCopyright.setVisibility(View.INVISIBLE);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.nav_header_title);
@@ -240,26 +251,32 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void displayGraph() {
-		mMainText.setVisibility(View.VISIBLE);
+		mBuyingRecommendation.setVisibility(View.VISIBLE);
 		mWelcome.setVisibility(View.GONE);
+		mIntroText.setVisibility(View.VISIBLE);
 		mPriceGraph.setVisibility(View.VISIBLE);
+		mGraphInfo.setVisibility(View.VISIBLE);
 		mCopyright.setVisibility(View.VISIBLE);
 	}
 
 	public void startProgress() {
 		mProgressBar.setVisibility(View.VISIBLE);
-		mMainText.setVisibility(View.GONE);
+		mBuyingRecommendation.setVisibility(View.GONE);
+		mIntroText.setVisibility(View.GONE);
 		mPriceGraph.setVisibility(View.GONE);
+		mGraphInfo.setVisibility(View.GONE);
 	}
 
 	public void endProgress() {
-		mMainText.setVisibility(View.VISIBLE);
+		mBuyingRecommendation.setVisibility(View.VISIBLE);
+		mIntroText.setVisibility(View.VISIBLE);
 		mPriceGraph.setVisibility(View.VISIBLE);
+		mGraphInfo.setVisibility(View.VISIBLE);
 		mProgressBar.setVisibility(View.GONE);
 	}
 
 	public void failedProgress() {
-		mMainText.setVisibility(View.VISIBLE);
+		mBuyingRecommendation.setVisibility(View.VISIBLE);
 		mProgressBar.setVisibility(View.GONE);
 	}
 

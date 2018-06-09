@@ -71,7 +71,7 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 
 	@Override
 	public void onCancelled() {
-		activity.setmMainText("Unable to obtain data");
+		activity.setmBuyingRecommendation("Unable to obtain data");
 		activity.failedProgress();
 	}
 
@@ -79,14 +79,22 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 	public void onPostExecute(CityPetrolState state) {
 		activity.endProgress();
 
+		String introText = state.getLeadInText();
+		String recommendation = state.getRecommendation();
+		String graphInfo = state.getInfo().replaceAll("below", "above");
+
 		String result = state.getLeadInText() + //System.getProperty("line.separator") +
 				state.getRecommendation() + //System.getProperty("line.separator") +
 				state.getInfo(); //+ System.getProperty("line.separator") +
 				//state.getImageUrl();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			activity.setmMainText(Html.fromHtml(result, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST));
+			activity.setTextResults(Html.fromHtml(introText, Html.FROM_HTML_MODE_COMPACT),
+					Html.fromHtml(recommendation, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST),
+					Html.fromHtml(graphInfo, Html.FROM_HTML_MODE_COMPACT));
 		} else {
-			activity.setmMainText(Html.fromHtml(result));
+			activity.setTextResults(Html.fromHtml(introText),
+					Html.fromHtml(recommendation),
+					Html.fromHtml(graphInfo));
 		}
 		new ImageDownloader(activity.mPriceGraph, state).execute(state.getImageUrl());
 	}

@@ -107,5 +107,9 @@
 	<string name="PREFERRED_CITY"><xliff:g id="preferred_city_pref">PreferredCity</xliff:g></string>
 	<string name="TOOLBAR_TITLE"><xliff:g id="toolbar_title">Toolbar</xliff:g></string>
 
+	<string name="RECENT_INTRO_TEXT"><xliff:g id="recent_intro_text">IntroText</xliff:g></string>
+	<string name="RECENT_RECOMMENDATION"><xliff:g id="recent_buying_recommendation">RecentRecommendation</xliff:g></string>
+	<string name="RECENT_GRAPH_INFO"><xliff:g id="recent_graph_info">RecentGraphInfo</xliff:g></string>
+
 	<string name="LOG_CITY_SELECTED"><xliff:g id="log_city_selected">LOG_CITY_SELECTED</xliff:g></string>
 </resources>
