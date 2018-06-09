@@ -105,6 +105,7 @@
 	<string name="CITY_PREFERENCES"><xliff:g id="city_preferences">CITY_PREF</xliff:g></string>
 	<string name="CURRENT_CITY_PREF"><xliff:g id="current_city_pref">CurrentCity</xliff:g></string>
 	<string name="PREFERRED_CITY"><xliff:g id="preferred_city_pref">PreferredCity</xliff:g></string>
+	<string name="TOOLBAR_TITLE"><xliff:g id="toolbar_title">Toolbar</xliff:g></string>
 
 	<string name="LOG_CITY_SELECTED"><xliff:g id="log_city_selected">LOG_CITY_SELECTED</xliff:g></string>
 </resources>

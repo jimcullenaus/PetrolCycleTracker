@@ -197,6 +197,9 @@ public class MainActivity extends AppCompatActivity
 		((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.PNG, 50, bs);
 		outState.putInt("GraphSize", bs.size());
 		outState.putByteArray("Graph", bs.toByteArray());
+		// toolbar title text
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		outState.putCharSequence(getString(R.string.TOOLBAR_TITLE), toolbar.getTitle());
 
 		super.onSaveInstanceState(outState);
 	}
@@ -207,6 +210,8 @@ public class MainActivity extends AppCompatActivity
 		mPriceGraph.setImageBitmap(bitmap);
 		mMainText.setText(savedInstanceState.getCharSequence("MainText"));
 		displayGraph();
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		toolbar.setTitle(savedInstanceState.getString(getString(R.string.TOOLBAR_TITLE)));
 
 		super.onRestoreInstanceState(savedInstanceState);
 	}
