@@ -13,6 +13,7 @@ import java.io.IOException;
 public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState> {
 
 	private MainActivity activity;
+	private City city;
 
 	PetrolDataRetriever(MainActivity activity) {
 		this.activity = activity;
@@ -26,9 +27,8 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 
 	@Override
 	public CityPetrolState doInBackground(City... params) {
-		String cityName;
 		try {
-			cityName = params[0].cityName();
+			city = params[0];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
 			cancel(true);
@@ -47,7 +47,7 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 		Element leadInText;
 		Element info;
 		try {
-			String elementId = String.format("petrol-prices-in-%s", cityName.toLowerCase());
+			String elementId = String.format("petrol-prices-in-%s", city.cityName().toLowerCase());
 			Element title = document.getElementById(elementId).parent();
 			leadInText = title.nextElementSibling();
 			recommendation = leadInText.nextElementSibling();

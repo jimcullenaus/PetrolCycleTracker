@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
 	PetrolDataRetriever adelaide = null;
 	PetrolDataRetriever perth = null;
 	SharedPreferences preferences;
+	City currentCity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity
 			public void onRefresh() {
 				swipeRefreshLayout.setRefreshing(true);
 				refreshLayout();
-
 			}
 		});
 
@@ -103,6 +103,11 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	private void fetchCity(City city) {
+		currentCity = city;
+		if (city == null) {
+			displayWelcome();
+			return;
+		}
 		new PetrolDataRetriever(this).execute(city);
 		String title = city.cityName() + " " + getString(R.string.nav_header_title);
 		Toolbar toolbar = findViewById(R.id.toolbar);
@@ -200,18 +205,24 @@ public class MainActivity extends AppCompatActivity
 		// toolbar title text
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		outState.putCharSequence(getString(R.string.TOOLBAR_TITLE), toolbar.getTitle());
+		int cityPref = currentCity == null ? -1 : currentCity.ordinal();
+		outState.putInt(getString(R.string.CURRENT_CITY_PREF), cityPref);
 
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		Bitmap bitmap = BitmapFactory.decodeByteArray(savedInstanceState.getByteArray("Graph"), 0, savedInstanceState.getInt("GraphSize"));
-		mPriceGraph.setImageBitmap(bitmap);
-		mMainText.setText(savedInstanceState.getCharSequence("MainText"));
-		displayGraph();
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		toolbar.setTitle(savedInstanceState.getString(getString(R.string.TOOLBAR_TITLE)));
+		int currentCityPref = savedInstanceState.getInt(getString(R.string.CURRENT_CITY_PREF));
+		if (currentCityPref >= 0) {
+			currentCity = City.getCity(currentCityPref);
+			Bitmap bitmap = BitmapFactory.decodeByteArray(savedInstanceState.getByteArray("Graph"), 0, savedInstanceState.getInt("GraphSize"));
+			mPriceGraph.setImageBitmap(bitmap);
+			mMainText.setText(savedInstanceState.getCharSequence("MainText"));
+			displayGraph();
+			Toolbar toolbar = findViewById(R.id.toolbar);
+			toolbar.setTitle(savedInstanceState.getString(getString(R.string.TOOLBAR_TITLE)));
+		}
 
 		super.onRestoreInstanceState(savedInstanceState);
 	}
@@ -231,6 +242,7 @@ public class MainActivity extends AppCompatActivity
 		mCopyright.setVisibility(View.INVISIBLE);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.nav_header_title);
+		currentCity = null;
 	}
 
 	public void displayGraph() {
@@ -258,7 +270,10 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void refreshLayout() {
-		mCopyright.setText("refreshed");
+		if (currentCity != null) {
+			fetchCity(currentCity);
+			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
+		}
 		swipeRefreshLayout.setRefreshing(false);
 	}
 }
