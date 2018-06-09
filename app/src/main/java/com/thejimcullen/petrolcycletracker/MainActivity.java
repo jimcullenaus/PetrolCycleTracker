@@ -92,14 +92,21 @@ public class MainActivity extends AppCompatActivity
 
 			if (preferredCity >= 0) {
 				displayGraph();
-				new PetrolDataRetriever(this).execute(City.getCity(preferredCity));
+				fetchCity(City.getCity(preferredCity));
 			} else if (currentCityPref >= 0) {
 				displayGraph();
-				new PetrolDataRetriever(this).execute(City.getCity(currentCityPref));
+				fetchCity(City.getCity(currentCityPref));
 			} else {
 				displayWelcome();
 			}
 		}
+	}
+
+	private void fetchCity(City city) {
+		new PetrolDataRetriever(this).execute(city);
+		String title = city.cityName() + " " + getString(R.string.nav_header_title);
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		toolbar.setTitle(title);
 	}
 
 	@Override
@@ -107,6 +114,9 @@ public class MainActivity extends AppCompatActivity
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
+		} else if (preferences.getInt(getString(R.string.CURRENT_CITY_PREF), -1) >= 0) {
+			setPreferences(getString(R.string.CURRENT_CITY_PREF), -1);
+			displayWelcome();
 		} else {
 			super.onBackPressed();
 		}
@@ -160,7 +170,7 @@ public class MainActivity extends AppCompatActivity
 			return false;
 		}
 		displayGraph();
-		new PetrolDataRetriever(this).execute(city);
+		fetchCity(city);
 		setPreferences(getString(R.string.CURRENT_CITY_PREF), city.ordinal());
 
 		finishNavigationSelection();
@@ -214,6 +224,8 @@ public class MainActivity extends AppCompatActivity
 		mWelcome.setVisibility(View.VISIBLE);
 		mPriceGraph.setVisibility(View.GONE);
 		mCopyright.setVisibility(View.INVISIBLE);
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.nav_header_title);
 	}
 
 	public void displayGraph() {

@@ -8,11 +8,11 @@ enum City {
 //	BRISBANE (Resources.getSystem().getString(R.string.brisbane)),
 //	ADELAIDE (Resources.getSystem().getString(R.string.adelaide)),
 //	PERTH (Resources.getSystem().getString(R.string.perth));
-	SYDNEY ("SYDNEY"),
-	MELBOURNE ("MELBOURNE"),
-	BRISBANE ("BRISBANE"),
-	ADELAIDE ("ADELAIDE"),
-	PERTH ("PERTH");
+	SYDNEY ("Sydney"),
+	MELBOURNE ("Melbourne"),
+	BRISBANE ("Brisbane"),
+	ADELAIDE ("Adelaide"),
+	PERTH ("Perth");
 
 	private String cityName;
 
