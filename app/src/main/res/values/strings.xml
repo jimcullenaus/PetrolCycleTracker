@@ -110,6 +110,9 @@
 	<string name="RECENT_INTRO_TEXT"><xliff:g id="recent_intro_text">IntroText</xliff:g></string>
 	<string name="RECENT_RECOMMENDATION"><xliff:g id="recent_buying_recommendation">RecentRecommendation</xliff:g></string>
 	<string name="RECENT_GRAPH_INFO"><xliff:g id="recent_graph_info">RecentGraphInfo</xliff:g></string>
+	<string name="RECENT_GRAPH_IMAGE"><xliff:g id="recent_graph_image">RecentGraphImage</xliff:g></string>
 
 	<string name="LOG_CITY_SELECTED"><xliff:g id="log_city_selected">LOG_CITY_SELECTED</xliff:g></string>
+
+	<string name="BAD"><xliff:g id="bad">bad</xliff:g></string>
 </resources>

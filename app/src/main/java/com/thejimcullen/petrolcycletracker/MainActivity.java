@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spanned;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -286,5 +288,57 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
 		}
 		swipeRefreshLayout.setRefreshing(false);
+	}
+
+	public void saveCurrentGraph() {
+		SharedPreferences.Editor preferencesEditor = preferences.edit();
+
+		preferencesEditor.putString(getString(R.string.RECENT_RECOMMENDATION), mBuyingRecommendation.getText().toString());
+		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_INFO), mGraphInfo.getText().toString());
+		preferencesEditor.putString(getString(R.string.RECENT_INTRO_TEXT), mIntroText.getText().toString());
+		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_IMAGE),
+				encodeTobase64(((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap()));
+		preferencesEditor.apply();
+	}
+
+	/**
+	 * @return true iff the recommendation, graph info, introductory text, and image all exist
+	 */
+	public boolean loadCurrentGraph() {
+		String recommendation = preferences.getString(getString(R.string.RECENT_RECOMMENDATION), null);
+		String graphInfo = preferences.getString(getString(R.string.RECENT_GRAPH_INFO), null);
+		String intro = preferences.getString(getString(R.string.RECENT_INTRO_TEXT), null);
+		Bitmap image = decodeBase64(getString(R.string.RECENT_GRAPH_IMAGE));
+		if (recommendation == null || graphInfo == null || intro == null || image == null) {
+			return false;
+		}
+		mBuyingRecommendation.setText(recommendation);
+		mGraphInfo.setText(graphInfo);
+		mIntroText.setText(intro);
+		mPriceGraph.setImageBitmap(image);
+
+		return true;
+	}
+
+	// method for bitmap to base64 -- courtesy of Manish Srivastava on Stack Overflow
+	public static String encodeTobase64(Bitmap inImage) {
+		Bitmap outImage = inImage;
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		outImage.compress(Bitmap.CompressFormat.PNG, 100, bs);
+		byte[] b = bs.toByteArray();
+		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+		Log.d("Image Log:", imageEncoded);
+		return imageEncoded;
+	}
+
+	// method for base64 to bitmap -- courtesy of Manish Srivastava on Stack Overflow
+	public static Bitmap decodeBase64(String input) {
+		if (input == null) {
+			return null;
+		}
+		byte[] decodedByte = Base64.decode(input, 0);
+		return BitmapFactory
+				.decodeByteArray(decodedByte, 0, decodedByte.length);
 	}
 }
