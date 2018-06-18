@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Spanned;
@@ -288,11 +287,10 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void refreshLayout() {
-		loadCurrentGraph();
-//		if (currentCity != null) {
-//			fetchCity(currentCity);
-//			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
-//		}
+		if (currentCity != null) {
+			fetchCity(currentCity);
+			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
+		}
 		swipeRefreshLayout.setRefreshing(false);
 	}
 
@@ -305,7 +303,6 @@ public class MainActivity extends AppCompatActivity
 		String graphImage = encodeTobase64(((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap());
 		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_IMAGE), graphImage);
 		preferencesEditor.apply();
-		Toast.makeText(this, "Saving graph long-term", Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -323,7 +320,6 @@ public class MainActivity extends AppCompatActivity
 		mGraphInfo.setText(graphInfo);
 		mIntroText.setText(intro);
 		mPriceGraph.setImageBitmap(image);
-		Toast.makeText(this, "Loading graph from last time", Toast.LENGTH_SHORT).show();
 
 		return true;
 	}
