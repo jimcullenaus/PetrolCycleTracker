@@ -85,15 +85,20 @@ public class MainActivity extends AppCompatActivity
 
 		// if not restoring from a recent state, use preference
 		if (savedInstanceState == null) {
+			boolean reloadSave = loadCurrentGraph();
 			int preferredCity = preferences.getInt(getString(R.string.PREFERRED_CITY), -1);
 			int currentCityPref = preferences.getInt(getString(R.string.CURRENT_CITY_PREF), -1);
 
 			if (preferredCity >= 0) {
 				displayGraph();
-				fetchCity(City.getCity(preferredCity));
+				if (!reloadSave) {
+					fetchCity(City.getCity(preferredCity));
+				}
 			} else if (currentCityPref >= 0) {
 				displayGraph();
-				fetchCity(City.getCity(currentCityPref));
+				if (!reloadSave) {
+					fetchCity(City.getCity(preferredCity));
+				}
 			} else {
 				displayWelcome();
 			}
@@ -283,10 +288,11 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void refreshLayout() {
-		if (currentCity != null) {
-			fetchCity(currentCity);
-			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
-		}
+		loadCurrentGraph();
+//		if (currentCity != null) {
+//			fetchCity(currentCity);
+//			Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show();
+//		}
 		swipeRefreshLayout.setRefreshing(false);
 	}
 
@@ -296,9 +302,10 @@ public class MainActivity extends AppCompatActivity
 		preferencesEditor.putString(getString(R.string.RECENT_RECOMMENDATION), mBuyingRecommendation.getText().toString());
 		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_INFO), mGraphInfo.getText().toString());
 		preferencesEditor.putString(getString(R.string.RECENT_INTRO_TEXT), mIntroText.getText().toString());
-		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_IMAGE),
-				encodeTobase64(((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap()));
+		String graphImage = encodeTobase64(((BitmapDrawable) mPriceGraph.getDrawable()).getBitmap());
+		preferencesEditor.putString(getString(R.string.RECENT_GRAPH_IMAGE), graphImage);
 		preferencesEditor.apply();
+		Toast.makeText(this, "Saving graph long-term", Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -308,7 +315,7 @@ public class MainActivity extends AppCompatActivity
 		String recommendation = preferences.getString(getString(R.string.RECENT_RECOMMENDATION), null);
 		String graphInfo = preferences.getString(getString(R.string.RECENT_GRAPH_INFO), null);
 		String intro = preferences.getString(getString(R.string.RECENT_INTRO_TEXT), null);
-		Bitmap image = decodeBase64(getString(R.string.RECENT_GRAPH_IMAGE));
+		Bitmap image = decodeBase64(preferences.getString(getString(R.string.RECENT_GRAPH_IMAGE), null));
 		if (recommendation == null || graphInfo == null || intro == null || image == null) {
 			return false;
 		}
@@ -316,6 +323,7 @@ public class MainActivity extends AppCompatActivity
 		mGraphInfo.setText(graphInfo);
 		mIntroText.setText(intro);
 		mPriceGraph.setImageBitmap(image);
+		Toast.makeText(this, "Loading graph from last time", Toast.LENGTH_SHORT).show();
 
 		return true;
 	}

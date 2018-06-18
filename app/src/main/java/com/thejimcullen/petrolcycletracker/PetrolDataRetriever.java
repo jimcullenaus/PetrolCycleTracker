@@ -97,6 +97,7 @@ public class PetrolDataRetriever  extends AsyncTask<City, Void, CityPetrolState>
 					Html.fromHtml(graphInfo));
 		}
 		new ImageDownloader(activity.mPriceGraph, state).execute(state.getImageUrl());
+		activity.saveCurrentGraph();
 	}
 
 
