@@ -68,7 +68,7 @@
 	<string name="pref_title_vibrate">Vibrate</string>
 	<!-- End of sample notification preferences -->
 
-	<string name="pref_title">Preferences</string>
+	<string name="pref_title">Preferred City</string>
 
 
 	<string name="sydney">Sydney</string>
@@ -102,6 +102,8 @@
 	<string name="RECENT_RECOMMENDATION"><xliff:g id="recent_buying_recommendation">RecentRecommendation</xliff:g></string>
 	<string name="RECENT_GRAPH_INFO"><xliff:g id="recent_graph_info">RecentGraphInfo</xliff:g></string>
 	<string name="RECENT_GRAPH_IMAGE"><xliff:g id="recent_graph_image">RecentGraphImage</xliff:g></string>
+
+	<string name="PREFERRED_CITY_RECOMMENDATION">PreferredCityRecommendation</string>
 
 	<string name="LOG_CITY_SELECTED"><xliff:g id="log_city_selected">LOG_CITY_SELECTED</xliff:g></string>
 
