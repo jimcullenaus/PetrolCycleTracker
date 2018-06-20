@@ -85,18 +85,19 @@ public class MainActivity extends AppCompatActivity
 		// if not restoring from a recent state, use preference
 		if (savedInstanceState == null) {
 			boolean reloadSave = loadCurrentGraph();
-			int preferredCity = preferences.getInt(getString(R.string.PREFERRED_CITY), -1);
+			// get the index of the currently preferred city and city of current screen
+			int preferredCityPref = preferences.getInt(getString(R.string.PREFERRED_CITY), -1);
 			int currentCityPref = preferences.getInt(getString(R.string.CURRENT_CITY_PREF), -1);
 
-			if (preferredCity >= 0) {
+			if (preferredCityPref >= 0) {
 				displayGraph();
 				if (!reloadSave) {
-					fetchCity(City.getCity(preferredCity));
+					fetchCity(City.getCity(preferredCityPref));
 				}
 			} else if (currentCityPref >= 0) {
 				displayGraph();
 				if (!reloadSave) {
-					fetchCity(City.getCity(preferredCity));
+					fetchCity(City.getCity(preferredCityPref));
 				}
 			} else {
 				displayWelcome();
