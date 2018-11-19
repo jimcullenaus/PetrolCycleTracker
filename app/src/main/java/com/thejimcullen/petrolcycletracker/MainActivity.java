@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.thejimcullen.petrolcycletracker.models.RecommendationState;
@@ -23,23 +22,26 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_main);
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+		ActivityMainBinding cycleInformationBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+		recommendationState = new RecommendationState();
+		cycleInformationBinding.setRecommendation(recommendationState);
+
+		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		// Drawer
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		DrawerLayout drawer =  findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		drawer.addDrawerListener(toggle);
 		toggle.syncState();
 
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		ActivityMainBinding cycleInformationBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-		recommendationState = new RecommendationState();
-		cycleInformationBinding.setRecommendation(recommendationState);
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(this, "Adelaide", Toast.LENGTH_SHORT).show();
 		}
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
