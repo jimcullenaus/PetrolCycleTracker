@@ -1,13 +1,15 @@
 package com.thejimcullen.petrolcycletracker.models;
 
+import android.databinding.ObservableField;
+
 public class RecommendationState {
-	public final String introText;
-	public final String buyingRecommendation;
-	public final String graphInfo;
+	public final ObservableField<String> introText = new ObservableField<>();
+	public final ObservableField<String> buyingRecommendation = new ObservableField<>();
+	public final ObservableField<String> graphInfo = new ObservableField<>();
 
 	public RecommendationState() {
-		this.introText = "intro text";
-		this.buyingRecommendation = "buying recommendation";
-		this.graphInfo = "graph info";
+		this.introText.set("intro text");
+		this.buyingRecommendation.set("buying recommendation");
+		this.graphInfo.set("graph info");
 	}
 }
