@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<ListPreference
+		android:entries="@array/cities_display"
+		android:entryValues="@array/cities_values"
+		android:defaultValue="-1"
+		android:key="preferred_city"
+		android:negativeButtonText="@null"
+		android:positiveButtonText="@null"
+		android:title="@string/pref_title_preferred_city"
+		/>
+
+	<MultiSelectListPreference
+		android:entries="@array/frequency_display"
+		android:entryValues="@array/frequency_values"
+		android:defaultValue="@array/default_frequencies"
+		android:key="notification_frequency"
+		android:title="@string/pref_title_notification_frequency" />
+
+</PreferenceScreen>

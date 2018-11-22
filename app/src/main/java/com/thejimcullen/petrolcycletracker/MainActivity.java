@@ -1,5 +1,6 @@
 package com.thejimcullen.petrolcycletracker;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.thejimcullen.petrolcycletracker.models.RecommendationState;
 import com.thejimcullen.petrolcycletracker.databinding.ActivityMainBinding;
+import com.thejimcullen.petrolcycletracker.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
+			Intent settingsIntent = new Intent(this, SettingsActivity.class);
+			startActivity(settingsIntent);
 			return true;
 		}
 
