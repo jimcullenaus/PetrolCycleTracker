@@ -9,10 +9,6 @@
 			android:id="@+id/welcome_nav_item"
 			android:title="@string/welcome_message"
 			/>
-		<item
-			android:id="@+id/about_nav_item"
-			android:title="@string/about_button"
-			/>
 	</group>
 	<group android:checkableBehavior="single">
 		<item

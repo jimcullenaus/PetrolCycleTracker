@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity
 		if (id == R.id.welcome_nav_item) {
 			displayWelcome();
 			Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
-		} else if (id == R.id.about_nav_item) {
-			Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
 		} else {
 			displayContent();
 			// City nav buttons
