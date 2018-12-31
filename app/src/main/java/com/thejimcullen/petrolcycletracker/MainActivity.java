@@ -6,25 +6,31 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thejimcullen.petrolcycletracker.models.City;
 import com.thejimcullen.petrolcycletracker.models.RecommendationState;
 import com.thejimcullen.petrolcycletracker.databinding.ActivityMainBinding;
 import com.thejimcullen.petrolcycletracker.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
+	SwipeRefreshLayout refreshLayout;
 	RecommendationState recommendationState;
 	RelativeLayout mainContent;
+	ProgressBar progressBar;
 	TextView welcomeText;
+	TextView failureText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +55,19 @@ public class MainActivity extends AppCompatActivity
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
+		refreshLayout = findViewById(R.id.main_refresh_layout);
+		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				refreshLayout.setRefreshing(true);
+				refreshLayout();
+			}
+		});
+
 		mainContent = findViewById(R.id.main_content);
+		progressBar = findViewById(R.id.progress_meter);
 		welcomeText = findViewById(R.id.welcome_text);
+		failureText = findViewById(R.id.failed_text);
 	}
 
 	@Override
@@ -99,20 +116,21 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
 		} else {
 			displayContent();
+
+			City selectedCity = null;
+
 			// City nav buttons
 			if (id == R.id.brisbane_nav_item) {
-				recommendationState.introText.set("Brisbane");
-				Toast.makeText(this, "Brisbane", Toast.LENGTH_SHORT).show();
+				selectedCity = City.BRISBANE;
 			} else if (id == R.id.sydney_nav_item) {
-				recommendationState.introText.set("Sydney");
-				Toast.makeText(this, "Sydney", Toast.LENGTH_SHORT).show();
+				selectedCity = City.SYDNEY;
 			} else if (id == R.id.melbourne_nav_item) {
-				recommendationState.introText.set("Melbourne");
-				Toast.makeText(this, "Melbourne", Toast.LENGTH_SHORT).show();
+				selectedCity = City.MELBOURNE;
 			} else if (id == R.id.adelaide_nav_item) {
-				recommendationState.introText.set("Adelaide");
-				Toast.makeText(this, "Adelaide", Toast.LENGTH_SHORT).show();
+				selectedCity = City.ADELAIDE;
 			}
+
+			fetchCity(selectedCity);
 		}
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -120,7 +138,30 @@ public class MainActivity extends AppCompatActivity
 		return true;
 	}
 
+	public void startProgress() {
+		failureText.setVisibility(View.GONE);
+		mainContent.setVisibility(View.GONE);
+		progressBar.setVisibility(View.VISIBLE);
+	}
+
+	public void failedProgress() {
+		failureText.setVisibility(View.VISIBLE);
+		progressBar.setVisibility(View.GONE);
+	}
+
+	public void endProgress() {
+		mainContent.setVisibility(View.VISIBLE);
+		progressBar.setVisibility(View.GONE);
+	}
+
+	public void setTextResults(String intro, String recommendation, String graphInfo) {
+		recommendationState.introText.set(intro);
+		//recommendationState.buyingRecommendation.set(recommendation);
+		//recommendationState.graphInfo.set(graphInfo);
+	}
+
 	private void displayWelcome() {
+		this.recommendationState.setSelectedCity(null);
 		welcomeText.setVisibility(View.VISIBLE);
 		mainContent.setVisibility(View.GONE);
 	}
@@ -128,5 +169,20 @@ public class MainActivity extends AppCompatActivity
 	private void displayContent() {
 		welcomeText.setVisibility(View.GONE);
 		mainContent.setVisibility(View.VISIBLE);
+	}
+
+	private void refreshLayout() {
+		City selectedCity = recommendationState.getSelectedCity();
+		if (selectedCity != null) {
+			fetchCity(selectedCity);
+		}
+	}
+
+	private void fetchCity(City city) {
+		if (city == null) {
+			return;
+		}
+
+		new PetrolDataRetriever(this).execute(city);
 	}
 }

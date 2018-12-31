@@ -8,7 +8,7 @@
 	<android.support.v4.widget.SwipeRefreshLayout
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/main_swipe_layout"
+		android:id="@+id/main_refresh_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fillViewport="true"
@@ -44,6 +44,13 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/welcome"
+					android:visibility="gone" />
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/failed_text"
+					android:text="@string/failure_text"
 					android:visibility="gone" />
 
 				<RelativeLayout
